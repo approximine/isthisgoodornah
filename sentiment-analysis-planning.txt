@@ -1,0 +1,32 @@
+Sentiment Analysis Notes
+1) Do some research into what I need in order for this to work (API? How will the flow go?)
+2) Base planning + framework (functions, flow, etc.)
+	- COMMIT THIS
+3) Start implementing
+	- Test per function, commit everything that works DON'T TRUST YOURSELF :(
+
+Primary Questions
+1) How can I get all "positive" or "negative" words? How do I identify words?
+	Hypothesis: Feed AI model many reviews and see what it spits out
+					   Fix the output according to own specifics if needed
+					   Test and continue to train off similar sets
+
+Links
+	https://www.analyticsvidhya.com/blog/2021/06/nlp-sentiment-analysis/
+
+Break up categories into positive negative
+	- Later we can do more specific categories for each
+
+Pandas = library for data analysis and data manipulation
+Matplotlib = library for data visualization
+	- Seaborn = library based on matplotlib with high-level interface for data visualization
+WordCloud = library to visualize text data
+re = functions to pre-process strings based on given regular expression
+
+NLTK (natural language toolkit for natural language processing) = collection of libraries that deal with natural language processing
+	- stopwords = collection of words that don't provide much meaning to a sentence (structural words)
+	- WordNetLemmatizer = turns sentences into word tokens but retains the context
+	
+	
+
+	
