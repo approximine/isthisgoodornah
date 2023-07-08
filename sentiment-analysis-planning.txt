@@ -17,16 +17,30 @@ Links
 Break up categories into positive negative
 	- Later we can do more specific categories for each
 
+Modules (pip install <module-name>)
 Pandas = library for data analysis and data manipulation
 Matplotlib = library for data visualization
-	- Seaborn = library based on matplotlib with high-level interface for data visualization
+	- specifically need pyplot
+Seaborn = library based on matplotlib with high-level interface for data visualization
 WordCloud = library to visualize text data
-re = functions to pre-process strings based on given regular expression
+regex = functions to pre-process strings based on given regular expression
 
 NLTK (natural language toolkit for natural language processing) = collection of libraries that deal with natural language processing
-	- stopwords = collection of words that don't provide much meaning to a sentence (structural words)
 	- WordNetLemmatizer = turns sentences into word tokens but retains the context
-	
+
+stopwords = collectyion of words that don't provide much meaning to a sentence (structural words)
+
+Scikit-Learn (Machine Learning Library for Python) (sklearn)
+
+1. CountVectorizer – transform text to vectors
+
+2. GridSearchCV – for hyperparameter tuning
+
+3. RandomForestClassifier – machine learning algorithm for classification
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.model_selection import GridSearchCV
+from sklearn.ensemble import RandomForestClassifier
 	
 
 	
