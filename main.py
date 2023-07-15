@@ -1,3 +1,5 @@
+# https://kavita-ganesan.com/how-to-use-countvectorizer/
+# https://www.analyticsvidhya.com/blog/2021/06/nlp-sentiment-analysis/
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
@@ -42,7 +44,7 @@ def custom_encoder(df):
 custom_encoder(df)
 print(df)
 sns.countplot(x=df.label)
-plt.show()
+# plt.show()
 
 # #Data Pre-processing
 # # 1) Iterate through each record, and using a regex, get rid of characters that don't belong to the alphabet
@@ -74,22 +76,54 @@ def text_transformation(df_col):
 corpus = text_transformation(df['text'])
 # print(corpus)
 word_cloud = " ".join(corpus)
-corpus = str(word_cloud)
+string_corpus = str(word_cloud)
 # print(corpus)
-for row in corpus:
+for row in string_corpus:
     for word in row:
         word_cloud+=" ".join(word)
+print("Finished creating string for word cloud")
 #Not sure if this is lagging or just... really slow. Check tmrw
 wordcloud = WordCloud(width = 500, height = 250, background_color = "white")
-wordcloud.generate(corpus)
+wordcloud.generate(string_corpus)
 # wordcloud.to_file('wordcloud_output.png')
 plt.imshow(wordcloud, interpolation="bilinear")
-# plt.figure(figsize=[8,10])
-# plt.axis("off")
+plt.figure(figsize=[8,10])
+plt.axis("off")
 
+print("Starting Count Vectorizing now")
 #Scikit-Learn
 
+# After count vectorizing it should... print? cv?? Whatever it is. Is it
+# just setting cv to that lmfao
+# cv is just a CountVectorizer object built with the idea of ngram_range
 cv = CountVectorizer(ngram_range=(1,2))
+
+# print(cv)
+# print("Done!")
+
+# we now ask cv to run fit_transform with the vectorizer and the passed in corpus
+# output is set to traindata
 traindata = cv.fit_transform(corpus)
+# print(traindata.toarray())
+
 x = traindata
 y = df.label
+
+parameters = {'n_estimators': [500, 1000, 1500],
+             'max_depth': [5, 10, None],
+             'min_samples_split': [5, 10, 15],
+             'min_samples_leaf': [1, 2, 5, 10],
+             'bootstrap': [True, False]}
+
+grid_search = GridSearchCV(RandomForestClassifier(),parameters,cv=5,return_train_score=True,n_jobs=-1)
+grid_search.fit(x,y)
+# print(grid_search.best_params_)
+
+rfc = RandomForestClassifier(max_features=grid_search.best_params_['max_features'],
+                                      max_depth=grid_search.best_params_['max_depth'],
+                                      n_estimators=grid_search.best_params_['n_estimators'],
+                                      min_samples_split=grid_search.best_params_['min_samples_split'],
+                                      min_samples_leaf=grid_search.best_params_['min_samples_leaf'],
+                                      bootstrap=grid_search.best_params_['bootstrap'])
+
+rfc.fit(x, y)
